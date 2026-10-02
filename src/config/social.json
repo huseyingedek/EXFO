@@ -1,0 +1,8 @@
+{
+  "main": [
+    { "name": "instagram", "icon": "FaInstagram", "link": "https://www.instagram.com/" },
+    { "name": "youtube", "icon": "FaYoutube", "link": "https://www.youtube.com/" },
+    { "name": "telegram", "icon": "FaTelegram", "link": "https://t.me/" },
+    { "name": "discord", "icon": "FaDiscord", "link": "https://discord.gg/efxo" }
+  ]
+}

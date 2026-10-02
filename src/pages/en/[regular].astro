@@ -1,0 +1,19 @@
+---
+// English legal / info pages from src/content/pages/en
+// The URL comes from the page's `route_key` (see src/i18n/config.ts → routes).
+import { routes, type RouteKey } from "@/i18n/config";
+import LegalPage from "@/layouts/pages/LegalPage.astro";
+import { getSinglePage } from "@/lib/contentParser.astro";
+
+export async function getStaticPaths() {
+  const pages = await getSinglePage("pages", "en");
+  return pages.map((page) => {
+    const route = routes[page.data.route_key as RouteKey]?.en ?? `/en/${page.slug}`;
+    return { params: { regular: route.replace(/^\/en\//, "") }, props: { page } };
+  });
+}
+
+const { page } = Astro.props;
+---
+
+<LegalPage lang="en" page={page} />

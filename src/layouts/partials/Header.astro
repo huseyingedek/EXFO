@@ -1,0 +1,170 @@
+---
+import Logo from "@/components/Logo.astro";
+import config from "@/config/config.json";
+import {
+  isExternal,
+  languages,
+  langs,
+  path,
+  resolveLink,
+  useTranslations,
+  type Lang,
+} from "@/i18n/config";
+
+interface Props {
+  lang: Lang;
+  alternates?: Partial<Record<Lang, string>>;
+}
+
+const { lang, alternates = {} } = Astro.props;
+const t = useTranslations(lang);
+const { settings } = config;
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+const menu = t.nav.main.map((item) => ({
+  name: item.name,
+  url: resolveLink(item.link, lang),
+}));
+const cta = { label: t.nav.cta.label, url: resolveLink(t.nav.cta.link, lang) };
+
+const isActive = (url: string) =>
+  url !== "/" && url !== "/en" && (pathname === url || pathname.startsWith(`${url}/`));
+
+// Language switcher: same page in the other language, or that language's home.
+const switcher = langs.map((l) => ({
+  lang: l,
+  short: languages[l].short,
+  label: languages[l].label,
+  url: alternates[l] ?? path("home", l),
+  current: l === lang,
+}));
+---
+
+<header
+  class={`header z-50 w-full transition-all duration-300 ${settings.sticky_header ? "fixed top-0" : ""}`}
+>
+  <nav class="navbar container relative z-30">
+    <!-- logo -->
+    <div class="order-0">
+      <Logo href={path("home", lang)} />
+    </div>
+    <!-- navbar toggler -->
+    <input id="nav-toggle" type="checkbox" class="peer hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-white lg:order-1 bg-dark/10 backdrop-blur-lg size-12 rounded-xl justify-center"
+    >
+      <svg
+        id="show-button"
+        class="h-6 fill-current block peer-checked:hidden"
+        viewBox="0 0 20 20"
+      >
+        <title>{t.nav.open_menu}</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg
+        id="hide-button"
+        class="h-6 fill-current hidden peer-checked:block"
+        viewBox="0 0 20 20"
+      >
+        <title>{t.nav.close_menu}</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    <!-- /navbar toggler -->
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden peer-checked:flex peer-checked:flex-col lg:flex w-full py-6 max-lg:mt-5 lg:order-1 lg:w-auto lg:gap-x-2 lg:py-0 xl:gap-x-8 bg-light/90 lg:bg-dark/30 backdrop-blur-lg rounded-2xl lg:rounded-full lg:corner-squircle px-6"
+    >
+      {
+        menu.map((item) => (
+          <li class="nav-item">
+            <a
+              href={item.url}
+              class={`nav-link block ${isActive(item.url) ? "active" : ""}`}
+              aria-current={isActive(item.url) ? "page" : undefined}
+            >
+              {item.name}
+            </a>
+          </li>
+        ))
+      }
+      <!-- mobile: CTA -->
+      <li class="pt-4 lg:hidden">
+        <a
+          class="btn-outline btn-sm"
+          href={cta.url}
+          target={isExternal(cta.url) ? "_blank" : undefined}
+          rel={isExternal(cta.url) ? "noopener noreferrer" : undefined}
+        >
+          {cta.label}
+        </a>
+      </li>
+    </ul>
+    <div class="order-1 ml-auto flex items-center gap-3 md:order-2 lg:ml-0">
+      <div
+        class="lang-switch"
+        role="group"
+        aria-label={t.nav.language}
+      >
+        {
+          switcher.map((s) => (
+            <a
+              href={s.url}
+              hreflang={languages[s.lang].htmlLang}
+              lang={languages[s.lang].htmlLang}
+              class={s.current ? "is-current" : ""}
+              aria-current={s.current ? "true" : undefined}
+              title={s.label}
+            >
+              {s.short}
+            </a>
+          ))
+        }
+      </div>
+      <a
+        class="btn btn-primary hidden lg:inline-block"
+        href={cta.url}
+        target={isExternal(cta.url) ? "_blank" : undefined}
+        rel={isExternal(cta.url) ? "noopener noreferrer" : undefined}
+      >
+        {cta.label}
+      </a>
+    </div>
+  </nav>
+
+  <!-- expanded menu background -->
+  <div class="bg-dark/50 backdrop-blur-sm -z-10" id="nav-menu-bg"></div>
+</header>
+
+<style>
+  .lang-switch {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9999px;
+    border: 1px solid color-mix(in srgb, var(--color-primary) 30%, transparent);
+    background: color-mix(in srgb, var(--color-dark) 60%, transparent);
+    backdrop-filter: blur(12px);
+  }
+  .lang-switch a {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    line-height: 1;
+    padding: 0.5rem 0.7rem;
+    border-radius: 9999px;
+    color: var(--color-text-dark);
+    transition: color 0.2s, background-color 0.2s;
+  }
+  .lang-switch a:hover {
+    color: var(--color-white, #fff);
+  }
+  .lang-switch a.is-current {
+    background: var(--color-primary);
+    color: var(--color-dark);
+  }
+</style>

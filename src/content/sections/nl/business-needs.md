@@ -1,0 +1,26 @@
+---
+enable: true
+badge: ""
+title: "De 5 bouwstenen van <strong>een gedisciplineerde trader</strong>"
+items:
+  - image: "/images/steps/step-1.svg"
+    number: "01"
+    title: "KENNIS"
+    content: "Leer hoe de forexmarkt en CFD's werken, van pips en lots tot margin en kosten — met een stevige basis."
+  - image: "/images/steps/step-2.svg"
+    number: "02"
+    title: "ANALYSE"
+    content: "Combineer technische en fundamentele analyse om te begrijpen wat er in de markt gebeurt — en waarom."
+  - image: "/images/steps/step-3.svg"
+    number: "03"
+    title: "TRADINGPLAN"
+    content: "Leg vast wanneer je instapt, uitstapt en níet handelt. Een plan maakt je trading herhaalbaar en meetbaar."
+  - image: "/images/steps/step-4.svg"
+    number: "04"
+    title: "RISICOBEHEER"
+    content: "Bepaal je positiegrootte, gebruik altijd een stop-loss en houd je hefboom laag om je kapitaal te beschermen."
+  - image: "/images/steps/step-5.svg"
+    number: "05"
+    title: "EVALUATIE"
+    content: "Houd een tradingjournaal bij en bespreek je trades met mentoren en de community om steeds beter te worden."
+---

@@ -1,0 +1,69 @@
+---
+import type { Lang } from "@/i18n/config";
+import {
+  getCollection,
+  getEntry,
+  type CollectionEntry,
+  type CollectionKey,
+} from "astro:content";
+
+type PageData = {
+  title?: string;
+  meta_title?: string;
+  description?: string;
+  image?: string;
+  draft?: boolean;
+};
+
+/**
+ * Get a single "list page" entry (like "-index" or a section file)
+ * for one language. Example: getListPage("homepage", "-index", "en")
+ * reads src/content/homepage/en/-index.md
+ */
+export const getListPage = async <C extends CollectionKey>(
+  collectionName: C,
+  documentId: "-index" | string,
+  lang?: Lang,
+): Promise<CollectionEntry<C>> => {
+  const fullId = lang ? `${lang}/${documentId}` : documentId;
+  const data = (await getEntry(
+    collectionName,
+    fullId,
+  )) as CollectionEntry<C> | null;
+
+  if (!data) {
+    throw new Error(
+      `No page found for the collection: ${collectionName} with filename: ${fullId}`,
+    );
+  }
+
+  return data;
+};
+
+export type LocalizedEntry<C extends CollectionKey> = CollectionEntry<C> & {
+  /** Id without the language folder, e.g. "forex-basics". Used in URLs. */
+  slug: string;
+};
+
+/**
+ * All publishable entries of a collection for one language
+ * (drafts and "-index" files are excluded).
+ */
+export const getSinglePage = async <C extends CollectionKey>(
+  collectionName: C,
+  lang: Lang,
+): Promise<LocalizedEntry<C>[]> => {
+  const entries = await getCollection(
+    collectionName,
+    ({ data, id }) =>
+      !(data as PageData)?.draft &&
+      id.startsWith(`${lang}/`) &&
+      // skip "-index" style list pages
+      !(id.split("/").pop() ?? id).startsWith("-"),
+  );
+  return entries.map((entry) => ({
+    ...entry,
+    slug: entry.id.slice(lang.length + 1),
+  }));
+};
+---

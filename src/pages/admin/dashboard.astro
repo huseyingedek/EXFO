@@ -1,0 +1,267 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+
+// Rendered on demand and protected by src/middleware.ts
+export const prerender = false;
+
+const admin = Astro.locals.admin;
+
+// DEMO DATA — replace with real data once the customer API is connected
+// (e.g. GET /api/admin/customers, backed by Stripe / GoHighLevel)
+const customers = [
+  { name: "Daan de Vries", email: "daan@example.com", phone: "+31 6 1234 5678", discord: "daan.dv", plan: "Pro", start: "2026-07-05", end: "2026-10-05", status: "Active" },
+  { name: "Sophie Jansen", email: "sophie@example.com", phone: "+31 6 2345 6789", discord: "sophiej", plan: "VIP", start: "2025-10-12", end: "2026-10-12", status: "Active" },
+  { name: "Lucas Bakker", email: "lucas@example.com", phone: "+31 6 3456 7890", discord: "lucasb", plan: "Starter", start: "2026-09-20", end: "2026-10-20", status: "Pending" },
+  { name: "Emma Visser", email: "emma@example.com", phone: "+31 6 4567 8901", discord: "emmav", plan: "Pro", start: "2026-03-01", end: "2026-09-01", status: "Cancelled" },
+];
+
+const stats = [
+  { label: "Total customers", value: "1,284", sub: "+48 this month", accent: "text-primary" },
+  { label: "Active memberships", value: "1,057", sub: "82% active", accent: "text-green-400" },
+  { label: "New this month", value: "48", sub: "+12% vs last month", accent: "text-primary" },
+  { label: "Monthly revenue (€)", value: "84,150", sub: "Estimated MRR", accent: "text-green-400" },
+];
+
+const statusClass = (s: string) =>
+  s === "Active" ? "bg-green-500/10 text-green-400 ring-green-500/30"
+  : s === "Pending" ? "bg-amber-500/10 text-amber-400 ring-amber-500/30"
+  : "bg-red-500/10 text-red-400 ring-red-500/30";
+---
+
+<AdminLayout title="Admin panel">
+  <div class="min-h-screen flex">
+    <!-- SIDEBAR -->
+    <aside class="hidden lg:flex w-64 shrink-0 flex-col border-r border-border bg-light/40 p-6 sticky top-0 h-screen">
+      <div class="flex items-center gap-3 mb-10">
+        <img src="/images/efxo-mark.png" alt="EFXO" class="size-11 rounded-xl ring-1 ring-primary/30 object-cover" />
+        <div>
+          <p class="text-white font-bold tracking-[0.15em] leading-none">EFXO</p>
+          <p class="text-text-dark text-xs mt-1">Admin</p>
+        </div>
+      </div>
+      <nav class="flex flex-col gap-1 text-sm">
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary font-medium">● Overview</a>
+        <a href="#customers" class="flex items-center gap-3 px-4 py-3 rounded-xl text-text hover:bg-white/5 transition-colors">● Customers</a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-text hover:bg-white/5 transition-colors">● Memberships</a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-text hover:bg-white/5 transition-colors">● Payments</a>
+        <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-text hover:bg-white/5 transition-colors">● Settings</a>
+      </nav>
+      <form method="post" action="/api/admin/logout" class="mt-auto">
+        <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-text-dark hover:text-red-400 hover:bg-white/5 transition-colors text-sm cursor-pointer">⎋ Sign out</button>
+      </form>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="flex-1 min-w-0">
+      <!-- topbar -->
+      <header class="flex items-center justify-between gap-4 border-b border-border px-6 lg:px-10 py-5 sticky top-0 bg-body/80 backdrop-blur-xl z-10">
+        <div>
+          <h1 class="text-xl lg:text-2xl font-bold text-white">Overview</h1>
+          <p class="text-text-dark text-sm">Signed in as {admin?.email}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="/" class="text-sm text-text-dark hover:text-primary transition-colors hidden sm:inline">View website ↗</a>
+          <form method="post" action="/api/admin/logout" class="lg:hidden">
+            <button type="submit" class="text-sm text-text-dark hover:text-red-400 transition-colors cursor-pointer">Sign out</button>
+          </form>
+          <div class="size-10 rounded-full bg-primary/15 text-primary grid place-items-center font-bold ring-1 ring-primary/30 uppercase">{admin?.email?.[0] ?? "A"}</div>
+        </div>
+      </header>
+
+      <main class="p-6 lg:p-10 flex flex-col gap-10">
+        <!-- STATS -->
+        <section class="grid grid-cols-2 xl:grid-cols-4 gap-4">
+          {stats.map((s) => (
+            <div class="bg-light border border-border rounded-2xl p-5 lg:p-6">
+              <p class="text-text-dark text-sm">{s.label}</p>
+              <p class={`text-2xl lg:text-3xl font-bold mt-2 ${s.accent}`}>{s.value}</p>
+              <p class="text-text-dark text-xs mt-1">{s.sub}</p>
+            </div>
+          ))}
+        </section>
+
+        <!-- ADD CUSTOMER -->
+        <section id="add-customer" class="bg-light border border-border rounded-3xl p-6 lg:p-8">
+          <div class="flex items-center justify-between mb-6 flex-wrap gap-2">
+            <div>
+              <h2 class="text-lg font-bold text-white">Add customer</h2>
+              <p class="text-text-dark text-sm">Enter the customer's details and membership information.</p>
+            </div>
+            <span class="text-xs text-text-dark bg-body px-3 py-1.5 rounded-full border border-border">Demo — API not connected</span>
+          </div>
+
+          <form id="customer-form" class="grid md:grid-cols-2 xl:grid-cols-3 gap-4" novalidate>
+            <div>
+              <label class="block text-sm text-text mb-2">Full name *</label>
+              <input name="name" required placeholder="e.g. Jan de Vries" class="admin-input" />
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">Email *</label>
+              <input name="email" type="email" required placeholder="name@example.com" class="admin-input" />
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">Phone</label>
+              <input name="phone" placeholder="+31 6 1234 5678" class="admin-input" />
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">Discord username</label>
+              <input name="discord" placeholder="username" class="admin-input" />
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">Membership *</label>
+              <select name="plan" class="admin-input">
+                <option>Starter</option>
+                <option selected>Pro</option>
+                <option>VIP</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">Status</label>
+              <select name="status" class="admin-input">
+                <option selected>Active</option>
+                <option>Pending</option>
+                <option>Cancelled</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">Start date</label>
+              <input name="start" type="date" class="admin-input" />
+            </div>
+            <div>
+              <label class="block text-sm text-text mb-2">End date</label>
+              <input name="end" type="date" class="admin-input" />
+            </div>
+            <div class="md:col-span-2 xl:col-span-1">
+              <label class="block text-sm text-text mb-2">Notes</label>
+              <input name="notes" placeholder="Optional note" class="admin-input" />
+            </div>
+
+            <div class="md:col-span-2 xl:col-span-3 flex items-center gap-3 mt-2">
+              <button type="submit" class="btn btn-primary !py-3 !px-8">＋ Save customer</button>
+              <button type="reset" class="btn btn-outline !py-3 !px-6">Clear</button>
+              <span id="form-feedback" class="hidden text-sm text-green-400">✅ Customer added (demo only, not saved)</span>
+            </div>
+          </form>
+        </section>
+
+        <!-- CUSTOMERS TABLE -->
+        <section id="customers" class="bg-light border border-border rounded-3xl p-6 lg:p-8">
+          <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
+            <div>
+              <h2 class="text-lg font-bold text-white">Customers</h2>
+              <p class="text-text-dark text-sm">Showing <span id="count">{customers.length}</span> records</p>
+            </div>
+            <input id="search" type="search" placeholder="🔍 Search customers..." class="admin-input !w-full sm:!w-64" />
+          </div>
+
+          <div class="overflow-x-auto -mx-2">
+            <table class="w-full text-sm min-w-[760px]">
+              <thead>
+                <tr class="text-left text-text-dark border-b border-border">
+                  <th class="font-medium px-4 py-3">Customer</th>
+                  <th class="font-medium px-4 py-3">Phone</th>
+                  <th class="font-medium px-4 py-3">Plan</th>
+                  <th class="font-medium px-4 py-3">Start</th>
+                  <th class="font-medium px-4 py-3">End</th>
+                  <th class="font-medium px-4 py-3">Status</th>
+                  <th class="font-medium px-4 py-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="customer-rows">
+                {customers.map((c) => (
+                  <tr class="border-b border-border/60 hover:bg-white/[0.02] transition-colors">
+                    <td class="px-4 py-4">
+                      <div class="font-medium text-white">{c.name}</div>
+                      <div class="text-text-dark text-xs">{c.email} · {c.discord}</div>
+                    </td>
+                    <td class="px-4 py-4 text-text">{c.phone}</td>
+                    <td class="px-4 py-4"><span class="text-primary font-medium">{c.plan}</span></td>
+                    <td class="px-4 py-4 text-text">{c.start}</td>
+                    <td class="px-4 py-4 text-text">{c.end}</td>
+                    <td class="px-4 py-4"><span class={`text-xs px-3 py-1 rounded-full ring-1 ${statusClass(c.status)}`}>{c.status}</span></td>
+                    <td class="px-4 py-4 text-right whitespace-nowrap">
+                      <button class="text-text-dark hover:text-primary transition-colors px-2" title="Edit">✎</button>
+                      <button class="text-text-dark hover:text-red-400 transition-colors px-2" title="Delete">🗑</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <p class="text-text-dark text-xs text-center pb-4">
+          EFXO admin panel · Demo data — real records will load once the customer API is connected.
+        </p>
+      </main>
+    </div>
+  </div>
+
+  <style is:global>
+    .admin-input {
+      width: 100%;
+      border-radius: 0.75rem;
+      background: var(--color-body);
+      border: 1px solid var(--color-border);
+      padding: 0.7rem 1rem;
+      color: #fff;
+      transition: border-color .2s;
+    }
+    .admin-input::placeholder { color: var(--color-text-dark); }
+    .admin-input:focus { outline: none; border-color: var(--color-primary); }
+    .admin-input option { background: var(--color-body); }
+  </style>
+
+  <script is:inline>
+    // === DEMO INTERACTIONS ===
+    // Once the API is connected (routes under /api/admin/* are already protected by the middleware):
+    //  - Search: GET /api/admin/customers?q=...
+    //  - Create: POST /api/admin/customers  (refresh the table on success)
+    //  - Edit/Delete: PUT/DELETE /api/admin/customers/:id
+
+    // In-table search (client-side filter - demo)
+    var search = document.getElementById("search");
+    var rows = document.getElementById("customer-rows");
+    search && search.addEventListener("input", function () {
+      var q = this.value.toLowerCase();
+      Array.prototype.forEach.call(rows.querySelectorAll("tr"), function (tr) {
+        tr.style.display = tr.textContent.toLowerCase().indexOf(q) > -1 ? "" : "none";
+      });
+    });
+
+    // Add customer (demo: adds a row to the table, does NOT save to a server)
+    var form = document.getElementById("customer-form");
+    form && form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var d = Object.fromEntries(new FormData(form).entries());
+      if (!d.name || !d.email) return;
+      var cls = d.status === "Active" ? "bg-green-500/10 text-green-400 ring-green-500/30"
+        : d.status === "Pending" ? "bg-amber-500/10 text-amber-400 ring-amber-500/30"
+        : "bg-red-500/10 text-red-400 ring-red-500/30";
+      var tr = document.createElement("tr");
+      tr.className = "border-b border-border/60 hover:bg-white/[0.02] transition-colors";
+      tr.innerHTML =
+        '<td class="px-4 py-4"><div class="font-medium text-white"></div><div class="text-text-dark text-xs"></div></td>' +
+        '<td class="px-4 py-4 text-text"></td>' +
+        '<td class="px-4 py-4"><span class="text-primary font-medium"></span></td>' +
+        '<td class="px-4 py-4 text-text"></td>' +
+        '<td class="px-4 py-4 text-text"></td>' +
+        '<td class="px-4 py-4"><span class="text-xs px-3 py-1 rounded-full ring-1 ' + cls + '"></span></td>' +
+        '<td class="px-4 py-4 text-right whitespace-nowrap"><button class="text-text-dark hover:text-primary px-2">✎</button><button class="text-text-dark hover:text-red-400 px-2">🗑</button></td>';
+      var td = tr.querySelectorAll("td");
+      td[0].querySelector("div.font-medium").textContent = d.name;
+      td[0].querySelector("div.text-text-dark").textContent = (d.email || "") + (d.discord ? " · " + d.discord : "");
+      td[1].textContent = d.phone || "-";
+      td[2].querySelector("span").textContent = d.plan;
+      td[3].textContent = d.start || "-";
+      td[4].textContent = d.end || "-";
+      td[5].querySelector("span").textContent = d.status;
+      rows.insertBefore(tr, rows.firstChild);
+      document.getElementById("count").textContent = rows.querySelectorAll("tr").length;
+      var fb = document.getElementById("form-feedback");
+      fb.classList.remove("hidden");
+      setTimeout(function(){ fb.classList.add("hidden"); }, 2500);
+      form.reset();
+    });
+  </script>
+</AdminLayout>

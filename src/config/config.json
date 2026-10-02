@@ -1,0 +1,36 @@
+{
+  "site": {
+    "title": "EFXO Market Miners",
+    "base_url": "https://efxo.com",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "",
+    "logo_width": "160",
+    "logo_height": "45",
+    "logo_text": "EFXO"
+  },
+  "settings": {
+    "sticky_header": true
+  },
+  "contact": {
+    "email": "support@efxo.com",
+    "phone": "",
+    "discord": "https://discord.gg/efxo",
+    "telegram": "https://t.me/efxo"
+  },
+  "company": {
+    "legal_name": "EFXO Market Miners",
+    "kvk": "",
+    "vat": "",
+    "address": ""
+  },
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+  "metadata": {
+    "meta_author": "EFXO Market Miners",
+    "meta_image": "/images/og-image.png"
+  }
+}

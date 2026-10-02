@@ -1,0 +1,145 @@
+---
+import Social from "@/components/Social.astro";
+import config from "@/config/config.json";
+import social from "@/config/social.json";
+import {
+  isExternal,
+  path,
+  resolveLink,
+  useTranslations,
+  type Lang,
+} from "@/i18n/config";
+import ImageMod from "@/layouts/components/ImageMod.astro";
+import type { SocialType } from "@/types";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const { main: socialLinks } = social as SocialType;
+const { contact, company } = config;
+
+const columns = [
+  { title: t.footer.col1_title, items: t.footer.col1 },
+  { title: t.footer.col2_title, items: t.footer.col2 },
+  { title: t.footer.col3_title, items: t.footer.col3 },
+].map((col) => ({
+  ...col,
+  items: col.items.map((i) => ({ name: i.name, url: resolveLink(i.link, lang) })),
+}));
+
+const copyright = t.footer.copyright.replace(
+  "{year}",
+  String(new Date().getFullYear()),
+);
+---
+
+<footer class="section pb-0 relative overflow-hidden">
+  <div class="container pb-10">
+    <div class="flex lg:justify-between flex-wrap gap-x-10 gap-y-10">
+      <!-- Column 1 - Logo & Contact -->
+      <div class="max-w-95 mb-12 lg:mb-20 text-lg text-text">
+        <a href={path("home", lang)} class="inline-flex items-center gap-3">
+          <ImageMod
+            src="/images/efxo-mark.png"
+            width={96}
+            height={96}
+            class="size-12 rounded-xl ring-1 ring-primary/30 object-cover"
+            alt="EFXO Market Miners"
+          />
+          <span class="leading-none">
+            <span class="block text-primary font-secondary font-bold text-2xl tracking-[0.25em]">EFXO</span>
+            <span class="block text-text-dark text-[0.65rem] uppercase tracking-[0.35em] mt-1">Market Miners</span>
+          </span>
+        </a>
+        <p class="mt-6">{t.footer.tagline}</p>
+        {
+          contact.email && (
+            <a class="link mt-6 inline-block underline" href={`mailto:${contact.email}`}>
+              {contact.email}
+            </a>
+          )
+        }
+        {
+          contact.phone && (
+            <a class="link mt-4 block" href={`tel:${contact.phone.replace(/[^+\d]/g, "")}`}>
+              {contact.phone}
+            </a>
+          )
+        }
+      </div>
+      {
+        columns.map((col) => (
+          <div>
+            <h3 class="footer-label">{col.title}</h3>
+            <ul>
+              {col.items.map((item) => (
+                <li class="mb-5">
+                  <a
+                    href={item.url}
+                    class="footer-link"
+                    target={isExternal(item.url) ? "_blank" : undefined}
+                    rel={isExternal(item.url) ? "noopener noreferrer" : undefined}
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Risk warning (shown on every page) -->
+    <div
+      class="mt-6 rounded-2xl border border-primary/25 bg-primary/5 px-6 py-5 text-sm leading-relaxed text-text"
+      role="note"
+    >
+      <p>
+        <strong class="text-white">{t.footer.risk_title}:</strong>{" "}
+        {t.footer.risk_text}
+        <a href={path("risk", lang)} class="ml-1 text-primary underline hover:no-underline">
+          {t.footer.risk_link}
+        </a>
+      </p>
+    </div>
+  </div>
+  <!-- Bottom Area -->
+  <hr
+    class="h-px bg-linear-to-r from-transparent from-25% via-white/50 to-75% to-transparent border-0"
+  />
+  <div class="container py-7">
+    <div
+      class="flex justify-between lg:items-center flex-col lg:flex-row gap-y-6 w-full"
+    >
+      <div class="text-base text-text">
+        <p set:html={copyright} />
+        {
+          (company.kvk || company.vat || company.address) && (
+            <p class="text-sm text-text-dark mt-1">
+              {[
+                company.legal_name,
+                company.address,
+                company.kvk && `${t.footer.kvk_label}: ${company.kvk}`,
+                company.vat && `${t.footer.vat_label}: ${company.vat}`,
+              ]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
+          )
+        }
+      </div>
+
+      <Social className="social-icons lg:ml-auto" source={socialLinks} />
+    </div>
+  </div>
+
+  <div
+    class="absolute bottom-0 left-1/2 size-280 blur-2xl -translate-x-1/2 translate-y-1/2 -z-10"
+    style="background: radial-gradient(circle, color-mix(in srgb, var(--color-primary) 30%, transparent) 0%, transparent 80%);"
+  >
+  </div>
+</footer>

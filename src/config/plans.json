@@ -1,0 +1,8 @@
+{
+  "currency": "eur",
+  "plans": [
+    { "id": "starter", "name": "Starter", "monthly": 49, "yearly": 490 },
+    { "id": "pro", "name": "Pro", "monthly": 99, "yearly": 990 },
+    { "id": "vip", "name": "VIP", "monthly": 249, "yearly": 2490 }
+  ]
+}

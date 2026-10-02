@@ -1,0 +1,229 @@
+---
+import DynamicIcon from "@/helpers/DynamicIcon";
+import Base from "@/layouts/Base.astro";
+import BusinessNeeds from "@/layouts/components/BusinessNeeds.astro";
+import CallToAction from "@/layouts/components/CallToAction.astro";
+import Faq from "@/layouts/components/Faq.astro";
+import GradientBlob from "@/layouts/components/GradientBlob.astro";
+import ImageMod from "@/layouts/components/ImageMod.astro";
+import ShowcaseCard from "@/layouts/components/ShowcaseCard.astro";
+import Badge from "@/layouts/components/Badge.astro";
+import { alternatesFor, isExternal, resolveLink, type Lang } from "@/i18n/config";
+import { getListPage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { Features } from "@/types";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const features = await getListPage("features", "-index", lang);
+const featuresData: Features = features.data;
+const primaryUrl = resolveLink(featuresData.banner.button_primary.link, lang);
+const secondaryUrl = resolveLink(featuresData.banner.button_secondary.link, lang);
+const linkAttrs = (url: string) =>
+  isExternal(url) ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<Base {...featuresData} lang={lang} alternates={alternatesFor("courses")}>
+  <!-- Banner -->
+  <section class="section-ph relative overflow-hidden pb-20">
+    <div class="container relative">
+      <div class="absolute top-0 left-0 w-full">
+        <div class="h-100 w-full overflow-hidden -translate-y-10">
+          <canvas class="heroSporeCanvas w-full"></canvas>
+        </div>
+      </div>
+      <div class="row justify-center">
+        <div class="mb-20 text-center relative">
+          <h1
+            class="mb-8 lg:col-9 mx-auto text-h3 lg:text-h1 hasHighlight"
+            set:html={markdownify(featuresData.banner.title)}
+          />
+          <p class="mb-10 lg:col-6 mx-auto text-lg">
+            {featuresData.banner.content}
+          </p>
+          <div class="flex gap-4 justify-center items-center flex-wrap">
+            <a class="btn btn-primary" href={primaryUrl} {...linkAttrs(primaryUrl)}
+              >{featuresData.banner.button_primary.label}</a
+            >
+            <a class="btn btn-outline" href={secondaryUrl} {...linkAttrs(secondaryUrl)}
+              >{featuresData.banner.button_secondary.label}</a
+            >
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="relative w-full max-w-280 mx-auto rounded-4xl overflow-hidden ring-1 ring-primary/25 shadow-[0_0_80px_-20px_var(--color-primary)]">
+            <ImageMod
+              src={featuresData.banner.image}
+              alt={featuresData.banner.image_alt ?? ""}
+              width={1120}
+              height={630}
+              format="webp"
+              loading="eager"
+              class="w-full h-auto object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="absolute left-1/2 top-0 -translate-y-1/2 -translate-x-1/2 size-160 xl:size-300 -z-20 blur-2xl"
+      style="background: radial-gradient(circle, var(--color-primary) 0%, color-mix(in srgb, var(--color-primary) 78%, transparent) 20%, transparent 70%);"
+    >
+    </div>
+  </section>
+  <hr
+    class="h-px bg-linear-to-r from-transparent from-10% via-white/50 to-90% to-transparent border-0"
+  />
+
+  <!-- Smart Platform Cards -->
+  {
+    featuresData.smart_platform.enable && (
+      <section class="section mx-5 relative isolate overflow-hidden">
+        <div class="container">
+          <div class="section-container">
+            <div class="section-intro centralize">
+              <h2
+                class="title hasHighlight"
+                set:html={markdownify(featuresData.smart_platform.title)}
+              />
+            </div>
+            <div class="section-content">
+              <div class="grid md:grid-cols-2 xl:grid-cols-3 grid-flow-dense gap-7">
+                {featuresData.smart_platform.cards.map((card: any) => (
+                  <ShowcaseCard
+                    title={card.title}
+                    subtitle={card.subtitle}
+                    image={card.image}
+                    classNames={card.classNames}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <GradientBlob />
+      </section>
+    )
+  }
+
+  <!-- Curriculum -->
+  {
+    featuresData.curriculum.enable && (
+      <section class="section relative isolate" id="curriculum">
+        <div class="container">
+          <div class="section-container">
+            <div class="section-intro centralize">
+              {featuresData.curriculum.badge && (
+                <Badge title={featuresData.curriculum.badge} />
+              )}
+              <h2
+                class="title hasHighlight"
+                set:html={markdownify(featuresData.curriculum.title)}
+              />
+              {featuresData.curriculum.content && (
+                <p class="subtitle">{featuresData.curriculum.content}</p>
+              )}
+            </div>
+            <div class="section-content">
+              <ol class="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+                {featuresData.curriculum.modules.map((mod) => (
+                  <li class="rounded-3xl border border-border bg-light/70 p-7 lg:p-8 flex flex-col">
+                    <div class="flex items-center justify-between gap-3 mb-5">
+                      <span class="font-secondary text-h4 font-bold text-primary leading-none">
+                        {mod.number}
+                      </span>
+                      <span class="text-xs uppercase tracking-[0.18em] text-text-dark border border-border rounded-full px-3 py-1">
+                        {mod.level}
+                      </span>
+                    </div>
+                    <h3 class="text-h5-sm font-bold text-white mb-4">{mod.title}</h3>
+                    <ul class="space-y-2.5 text-text">
+                      {mod.lessons.map((lesson) => (
+                        <li class="flex gap-3">
+                          <span class="mt-2.5 size-1.5 shrink-0 rounded-full bg-primary" aria-hidden="true" />
+                          <span>{lesson}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+        </div>
+        <div class="absolute inset-0 grid place-items-center size-full -z-10">
+          <div class="size-225 bg-radial from-primary/20 to-transparent from-0% to-70% rounded-full" />
+        </div>
+      </section>
+    )
+  }
+
+  <!-- Service Features (alternating) -->
+  {
+    featuresData.service_features.enable &&
+      featuresData.service_features.items.map((feature: any, index: number) => (
+        <section
+          class={
+            index === 0
+              ? "section-sm relative isolate"
+              : "section-sm relative isolate"
+          }
+        >
+          <div class="container">
+            <div class="rounded-3xl bg-light/6 overflow-hidden">
+              <div class="grid lg:grid-cols-2">
+                <div
+                  class={`p-8 lg:p-12 xl:p-14 ${feature.reverse ? "" : "lg:order-1"}`}
+                >
+                  <h2
+                    class="text-h3-sm lg:text-h2 font-bold hasHighlight mb-9 lg:mb-12"
+                    set:html={markdownify(feature.title)}
+                  />
+
+                  <div class="grid sm:grid-cols-2 gap-8 lg:gap-10">
+                    {feature.items.map((item: any) => (
+                      <article>
+                        <div class="size-10 rounded-xl bg-white/6 border border-border grid place-items-center mb-4">
+                          <DynamicIcon
+                            icon={item.icon}
+                            className="text-text-light text-lg"
+                          />
+                        </div>
+                        <h3 class="text-h5-sm font-bold text-white mb-2">
+                          {item.title}
+                        </h3>
+                        <p class="text-text">{item.content}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
+
+                <div
+                  class={`p-8 lg:p-12 xl:p-14 bg-white/2 h-max ${feature.reverse ? "" : "lg:order-0"}`}
+                >
+                  <ImageMod
+                    src={feature.image}
+                    alt=""
+                    class="w-full object-contain"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <GradientBlob />
+        </section>
+      ))
+  }
+
+  <!-- Business Needs -->
+  <BusinessNeeds lang={lang} />
+
+  <!-- FAQ -->
+  <Faq lang={lang} />
+
+  <!-- Call to Action -->
+  <CallToAction lang={lang} />
+</Base>

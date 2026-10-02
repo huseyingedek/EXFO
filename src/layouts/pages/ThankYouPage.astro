@@ -1,0 +1,51 @@
+---
+import { alternatesFor, isExternal, resolveLink, type Lang } from "@/i18n/config";
+import Base from "@/layouts/Base.astro";
+import PageHeader from "@/layouts/components/PageHeader.astro";
+import { getListPage } from "@/lib/contentParser.astro";
+import type { Thanks } from "@/types";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const entry = await getListPage("thanks", "-index", lang);
+const data: Thanks = entry.data;
+const buttonUrl = resolveLink(data.button.link, lang);
+---
+
+<Base {...data} lang={lang} alternates={alternatesFor("thanks")} noindex>
+  <PageHeader title={data.page_header.title} subtitle={data.page_header.subtitle} />
+  <section class="section pt-0">
+    <div class="container">
+      <ol class="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+        {
+          data.steps.map((step, i) => (
+            <li class="rounded-3xl border border-border bg-light/70 p-7">
+              <span class="font-secondary text-h4 font-bold text-primary leading-none">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h2 class="text-h5-sm font-bold text-white mt-4 mb-3">{step.title}</h2>
+              <p class="text-text" set:html={step.content} />
+            </li>
+          ))
+        }
+      </ol>
+      {
+        data.button.enable && (
+          <div class="flex justify-center mt-12">
+            <a
+              href={buttonUrl}
+              class="btn btn-primary"
+              target={isExternal(buttonUrl) ? "_blank" : undefined}
+              rel={isExternal(buttonUrl) ? "noopener noreferrer" : undefined}
+            >
+              {data.button.label}
+            </a>
+          </div>
+        )
+      }
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,97 @@
+---
+import { useTranslations, type Lang } from "@/i18n/config";
+import { getListPage } from "@/lib/contentParser.astro";
+import { formatPrice, getPlan } from "@/lib/plans";
+import type { Pricing } from "@/types";
+import GradientBlob from "./GradientBlob.astro";
+import PricingCard from "./PricingCard.astro";
+
+interface Props {
+  lang: Lang;
+  /** Override the section title HTML */
+  title?: string;
+  /** Override the section description */
+  content?: string;
+  isHome?: boolean;
+}
+
+const { lang, title, content, isHome = true } = Astro.props;
+const t = useTranslations(lang);
+
+const pricingEntry = await getListPage("pricing", "-index", lang);
+const pricingData: Pricing = pricingEntry.data;
+
+const sectionTitle = title ?? pricingData.page_header?.title ?? "";
+const sectionContent = content ?? pricingData.page_header?.content ?? "";
+
+const cards = pricingData.plans.map((plan) => {
+  const config = getPlan(plan.id);
+  if (!config) {
+    throw new Error(
+      `Pricing plan "${plan.id}" (${lang}) has no matching entry in src/config/plans.json`,
+    );
+  }
+  return {
+    ...plan,
+    monthly: formatPrice(config.monthly, lang),
+    yearly: formatPrice(config.yearly, lang),
+  };
+});
+---
+
+<section
+  class={`section-box ${isHome ? "" : "pt-0"} my-0 bg-transparent`}
+  id="pricing"
+>
+  <div class="container">
+    <div class="section-container">
+      {
+        isHome && (
+          <div class="section-intro centralize">
+            <h2 class="title hasHighlight  " set:html={sectionTitle} />
+            {sectionContent && <p>{sectionContent}</p>}
+          </div>
+        )
+      }
+      <div class="section-content">
+        <div class="pricing-container">
+          <div class="price-togger">
+            <input
+              type="checkbox"
+              data-pricing-toggle
+              id="pricing-toggle"
+              class="hidden"
+            />
+            <label for="pricing-toggle" class="price-toggler-btn active"
+              >{t.pricing.monthly}</label
+            >
+            <label for="pricing-toggle" class="price-toggler-btn"
+              >{t.pricing.yearly}</label
+            >
+          </div>
+          <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-7 relative z-10">
+            {
+              cards.map((plan) => (
+                <PricingCard
+                  lang={lang}
+                  planId={plan.id}
+                  monthly={plan.monthly}
+                  yearly={plan.yearly}
+                  title={plan.title}
+                  is_featured={plan.is_featured}
+                  button_label={plan.button_label}
+                  description={plan.description}
+                  features={plan.features}
+                />
+              ))
+            }
+          </div>
+          <p class="mt-8 text-center text-sm text-text-dark relative z-10">
+            {t.pricing.vat_note}
+          </p>
+        </div>
+        <GradientBlob />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,25 @@
+---
+import "@/styles/main.css";
+export interface Props {
+  title?: string;
+}
+const { title = "EFXO Admin" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>{title} · EFXO</title>
+    <style is:global>
+      body { font-family: var(--font-primary, system-ui, sans-serif); }
+      h1,h2,h3,h4 { font-family: var(--font-secondary, Georgia, serif); }
+    </style>
+  </head>
+  <body class="bg-body text-text min-h-screen antialiased">
+    <slot />
+  </body>
+</html>

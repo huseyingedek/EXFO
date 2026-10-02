@@ -1,0 +1,26 @@
+---
+enable: true
+badge: ""
+title: "The 5 building blocks of <strong>a disciplined trader</strong>"
+items:
+  - image: "/images/steps/step-1.svg"
+    number: "01"
+    title: "KNOWLEDGE"
+    content: "Learn how the forex market and CFDs work, from pips and lots to margin and costs — on a solid foundation."
+  - image: "/images/steps/step-2.svg"
+    number: "02"
+    title: "ANALYSIS"
+    content: "Combine technical and fundamental analysis to understand what is happening in the market — and why."
+  - image: "/images/steps/step-3.svg"
+    number: "03"
+    title: "TRADING PLAN"
+    content: "Define when you enter, when you exit and when you don't trade. A plan makes your trading repeatable and measurable."
+  - image: "/images/steps/step-4.svg"
+    number: "04"
+    title: "RISK MANAGEMENT"
+    content: "Size every position, always use a stop-loss and keep leverage low to protect your capital."
+  - image: "/images/steps/step-5.svg"
+    number: "05"
+    title: "REVIEW"
+    content: "Keep a trading journal and review your trades with mentors and the community to keep improving."
+---

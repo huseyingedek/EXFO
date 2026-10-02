@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "site_title": "EFXO Market Miners",
+    "title_suffix": " | EFXO Market Miners",
+    "description": "EFXO Market Miners — professionele forex- en CFD-educatie. Live lessen, dagelijkse marktanalyses, een actieve Discord-community en een complete videobibliotheek. Uitsluitend educatief, geen beleggingsadvies."
+  },
+  "nav": {
+    "main": [
+      {
+        "name": "Opleidingen",
+        "link": "route:courses"
+      },
+      {
+        "name": "Lidmaatschap",
+        "link": "route:membership"
+      },
+      {
+        "name": "Analyses",
+        "link": "route:insights"
+      },
+      {
+        "name": "Over ons",
+        "link": "route:about"
+      },
+      {
+        "name": "Contact",
+        "link": "route:contact"
+      }
+    ],
+    "cta": {
+      "label": "Word lid van Discord",
+      "link": "https://discord.gg/efxo"
+    },
+    "open_menu": "Menu openen",
+    "close_menu": "Menu sluiten",
+    "language": "Taal",
+    "switch_to": "Bekijk deze pagina in het Nederlands"
+  },
+  "footer": {
+    "tagline": "Forex- en CFD-educatie met een professionele, risicobewuste aanpak. Leer hoe de markt werkt met live lessen, dagelijkse analyses en een betrokken community.",
+    "col1_title": "Ontdek",
+    "col1": [
+      {
+        "name": "Home",
+        "link": "route:home"
+      },
+      {
+        "name": "Opleidingen",
+        "link": "route:courses"
+      },
+      {
+        "name": "Lidmaatschap",
+        "link": "route:membership"
+      },
+      {
+        "name": "Over ons",
+        "link": "route:about"
+      },
+      {
+        "name": "Contact",
+        "link": "route:contact"
+      }
+    ],
+    "col2_title": "Kennisbank",
+    "col2": [
+      {
+        "name": "Marktanalyses",
+        "link": "route:insights"
+      },
+      {
+        "name": "Discord-community",
+        "link": "https://discord.gg/efxo"
+      },
+      {
+        "name": "Veelgestelde vragen",
+        "link": "route:membership#faq"
+      }
+    ],
+    "col3_title": "Juridisch",
+    "col3": [
+      {
+        "name": "Risicowaarschuwing",
+        "link": "route:risk"
+      },
+      {
+        "name": "Privacybeleid",
+        "link": "route:privacy"
+      },
+      {
+        "name": "Algemene voorwaarden",
+        "link": "route:terms"
+      }
+    ],
+    "risk_title": "Risicowaarschuwing",
+    "risk_text": "CFD's zijn complexe instrumenten en brengen door de hefboomwerking een hoog risico met zich mee om snel geld te verliezen. Uit onderzoek van ESMA blijkt dat 74–89% van de rekeningen van particuliere beleggers geld verliest bij het handelen in CFD's. Overweeg of je begrijpt hoe CFD's werken en of je het je kunt veroorloven het hoge risico te nemen je geld te verliezen. EFXO Market Miners biedt uitsluitend educatie en geeft geen beleggingsadvies, handelssignalen of persoonlijke aanbevelingen.",
+    "risk_link": "Lees de volledige risicowaarschuwing",
+    "kvk_label": "KvK",
+    "vat_label": "Btw",
+    "copyright": "&copy; {year} <strong>EFXO Market Miners</strong> &bull; Alle rechten voorbehouden. Uitsluitend educatief — geen beleggingsadvies."
+  },
+  "common": {
+    "back_home": "Terug naar home",
+    "read_more": "Lees verder",
+    "min_read": "min leestijd",
+    "share": "Delen:",
+    "related_posts": "Meer analyses",
+    "latest_posts": "Laatste analyses & artikelen",
+    "featured": "Uitgelicht",
+    "copy_link": "Link kopiëren",
+    "link_copied": "Link gekopieerd"
+  },
+  "forms": {
+    "name": "Je naam",
+    "email": "Je e-mailadres",
+    "phone": "Je telefoonnummer (optioneel)",
+    "message": "Je bericht...",
+    "submit_contact": "Bericht versturen",
+    "sending": "Bezig met versturen…",
+    "success_contact": "Bedankt! Je bericht is verzonden. We reageren zo snel mogelijk, meestal binnen één werkdag.",
+    "lead_submit": "Download de gratis gids",
+    "success_lead": "Gelukt! De gids is onderweg naar je inbox.",
+    "error_required": "Vul je naam en een geldig e-mailadres in.",
+    "error_generic": "Er ging iets mis. Probeer het later opnieuw.",
+    "error_network": "Netwerkfout — controleer je verbinding en probeer het opnieuw.",
+    "consent": "Door dit formulier te versturen ga je akkoord met ons <a href=\"/privacybeleid\" class=\"underline hover:text-primary\">privacybeleid</a>."
+  },
+  "pricing": {
+    "monthly": "Maandelijks",
+    "yearly": "Jaarlijks",
+    "per_month": "/ maand",
+    "per_year": "/ jaar",
+    "included": "Inbegrepen",
+    "most_popular": "Meest gekozen",
+    "vat_note": "Alle prijzen in euro's, inclusief btw. Maandelijks opzegbaar."
+  },
+  "checkout": {
+    "title": "Start met {plan}",
+    "intro": "Vul je gegevens in. Daarna word je doorgestuurd naar de beveiligde betaalpagina van Stripe.",
+    "billing_monthly": "Maandelijkse betaling",
+    "billing_yearly": "Jaarlijkse betaling",
+    "name_label": "Volledige naam",
+    "name_placeholder": "Jan de Vries",
+    "email_label": "E-mailadres",
+    "email_placeholder": "jan@voorbeeld.nl",
+    "submit": "Doorgaan naar betalen",
+    "close": "Sluiten",
+    "terms": "Door verder te gaan ga je akkoord met de <a href=\"/algemene-voorwaarden\" class=\"underline hover:text-primary\">algemene voorwaarden</a>, bevestig je dat je de <a href=\"/risicowaarschuwing\" class=\"underline hover:text-primary\">risicowaarschuwing</a> hebt gelezen en vraag je om direct te starten met je lidmaatschap. Herroep je binnen 14 dagen, dan betaal je naar verhouding voor de periode die al is geleverd.",
+    "error_required": "Vul je naam en een geldig e-mailadres in.",
+    "error_generic": "Het afrekenen kon niet worden gestart. Probeer het opnieuw.",
+    "error_network": "Netwerkfout — probeer het opnieuw."
+  },
+  "notfound": {
+    "title": "Pagina niet gevonden",
+    "text": "De pagina die je zoekt bestaat niet (meer), is verplaatst of is tijdelijk niet beschikbaar."
+  }
+}

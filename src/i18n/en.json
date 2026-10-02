@@ -1,0 +1,156 @@
+{
+  "meta": {
+    "site_title": "EFXO Market Miners",
+    "title_suffix": " | EFXO Market Miners",
+    "description": "EFXO Market Miners — professional forex and CFD education. Live lessons, daily market analysis, an active Discord community and a complete video library. Educational only, not investment advice."
+  },
+  "nav": {
+    "main": [
+      {
+        "name": "Courses",
+        "link": "route:courses"
+      },
+      {
+        "name": "Membership",
+        "link": "route:membership"
+      },
+      {
+        "name": "Insights",
+        "link": "route:insights"
+      },
+      {
+        "name": "About",
+        "link": "route:about"
+      },
+      {
+        "name": "Contact",
+        "link": "route:contact"
+      }
+    ],
+    "cta": {
+      "label": "Join our Discord",
+      "link": "https://discord.gg/efxo"
+    },
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "language": "Language",
+    "switch_to": "View this page in English"
+  },
+  "footer": {
+    "tagline": "Forex and CFD education with a professional, risk-first approach. Learn how the market works through live lessons, daily analysis and an engaged community.",
+    "col1_title": "Explore",
+    "col1": [
+      {
+        "name": "Home",
+        "link": "route:home"
+      },
+      {
+        "name": "Courses",
+        "link": "route:courses"
+      },
+      {
+        "name": "Membership",
+        "link": "route:membership"
+      },
+      {
+        "name": "About",
+        "link": "route:about"
+      },
+      {
+        "name": "Contact",
+        "link": "route:contact"
+      }
+    ],
+    "col2_title": "Resources",
+    "col2": [
+      {
+        "name": "Market insights",
+        "link": "route:insights"
+      },
+      {
+        "name": "Discord community",
+        "link": "https://discord.gg/efxo"
+      },
+      {
+        "name": "FAQ",
+        "link": "route:membership#faq"
+      }
+    ],
+    "col3_title": "Legal",
+    "col3": [
+      {
+        "name": "Risk warning",
+        "link": "route:risk"
+      },
+      {
+        "name": "Privacy policy",
+        "link": "route:privacy"
+      },
+      {
+        "name": "Terms & conditions",
+        "link": "route:terms"
+      }
+    ],
+    "risk_title": "Risk warning",
+    "risk_text": "CFDs are complex instruments and come with a high risk of losing money rapidly due to leverage. According to ESMA, 74–89% of retail investor accounts lose money when trading CFDs. You should consider whether you understand how CFDs work and whether you can afford to take the high risk of losing your money. EFXO Market Miners provides education only and does not give investment advice, trading signals or personal recommendations.",
+    "risk_link": "Read the full risk warning",
+    "kvk_label": "Chamber of Commerce (KvK)",
+    "vat_label": "VAT",
+    "copyright": "&copy; {year} <strong>EFXO Market Miners</strong> &bull; All rights reserved. Educational only — not investment advice."
+  },
+  "common": {
+    "back_home": "Back to home",
+    "read_more": "Read more",
+    "min_read": "min read",
+    "share": "Share:",
+    "related_posts": "More insights",
+    "latest_posts": "Latest insights & articles",
+    "featured": "Featured",
+    "copy_link": "Copy link",
+    "link_copied": "Link copied"
+  },
+  "forms": {
+    "name": "Your name",
+    "email": "Your email address",
+    "phone": "Your phone number (optional)",
+    "message": "Your message...",
+    "submit_contact": "Send message",
+    "sending": "Sending…",
+    "success_contact": "Thank you! Your message has been sent. We usually reply within one business day.",
+    "lead_submit": "Download the free guide",
+    "success_lead": "Done! The guide is on its way to your inbox.",
+    "error_required": "Please enter your name and a valid email address.",
+    "error_generic": "Something went wrong. Please try again later.",
+    "error_network": "Network error — please check your connection and try again.",
+    "consent": "By submitting this form you agree to our <a href=\"/en/privacy-policy\" class=\"underline hover:text-primary\">privacy policy</a>."
+  },
+  "pricing": {
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "per_month": "/ month",
+    "per_year": "/ year",
+    "included": "What's included",
+    "most_popular": "Most popular",
+    "vat_note": "All prices in euros, including VAT. Cancel monthly."
+  },
+  "checkout": {
+    "title": "Start with {plan}",
+    "intro": "Enter your details. You will then be redirected to Stripe's secure payment page.",
+    "billing_monthly": "Billed monthly",
+    "billing_yearly": "Billed yearly",
+    "name_label": "Full name",
+    "name_placeholder": "Jane Smith",
+    "email_label": "Email address",
+    "email_placeholder": "jane@example.com",
+    "submit": "Continue to payment",
+    "close": "Close",
+    "terms": "By continuing you agree to our <a href=\"/en/terms\" class=\"underline hover:text-primary\">terms & conditions</a>, confirm you have read the <a href=\"/en/risk-warning\" class=\"underline hover:text-primary\">risk warning</a> and ask us to start your membership immediately. If you withdraw within 14 days, you pay proportionally for the period already provided.",
+    "error_required": "Please enter your name and a valid email address.",
+    "error_generic": "Checkout could not be started. Please try again.",
+    "error_network": "Network error — please try again."
+  },
+  "notfound": {
+    "title": "Page not found",
+    "text": "The page you are looking for doesn't exist (anymore), has been moved or is temporarily unavailable."
+  }
+}

@@ -1,0 +1,39 @@
+---
+import { alternatesFor, routes, type Lang, type RouteKey } from "@/i18n/config";
+import Base from "@/layouts/Base.astro";
+import PageHeader from "@/layouts/components/PageHeader.astro";
+import type { LocalizedEntry } from "@/lib/contentParser.astro";
+import { render } from "astro:content";
+
+interface Props {
+  lang: Lang;
+  page: LocalizedEntry<"pages">;
+}
+
+const { lang, page } = Astro.props;
+const { title, description, updated, route_key } = page.data;
+const { Content } = await render(page);
+const alternates =
+  route_key in routes ? alternatesFor(route_key as RouteKey) : undefined;
+const updatedLabel = lang === "nl" ? "Laatst bijgewerkt" : "Last updated";
+---
+
+<Base {...page.data} lang={lang} alternates={alternates}>
+  <PageHeader title={title} subtitle={description ?? ""} />
+  <section class="section-sm pt-0">
+    <div class="container">
+      <div class="row justify-center">
+        <div class="lg:col-9">
+          {updated && (
+            <p class="text-sm text-text-dark mb-8">
+              {updatedLabel}: {updated}
+            </p>
+          )}
+          <div class="content">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="560" height="360" viewBox="0 0 560 360" fill="none">
+<defs>
+<linearGradient id="card" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1B150C"/><stop offset="1" stop-color="#0D0A06"/></linearGradient>
+<linearGradient id="area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F2B01E" stop-opacity=".35"/><stop offset="1" stop-color="#F2B01E" stop-opacity="0"/></linearGradient>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#F2B01E" stop-opacity=".18"/><stop offset="1" stop-color="#F2B01E" stop-opacity="0"/></radialGradient>
+</defs>
+<rect x="10" y="10" width="540" height="340" rx="16" fill="url(#card)" stroke="#2A2416"/><circle cx="120" cy="300" r="170" fill="url(#glow)"/>
+<text x="44" y="52" font-family="Inter Tight, Inter, Segoe UI, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#F2B01E" letter-spacing=".18em">POSITION SIZE</text>
+<g font-family="Inter Tight, Inter, Segoe UI, Helvetica, Arial, sans-serif">
+<rect x="40" y="74" width="230" height="74" rx="12" fill="#0B0805" stroke="#2A2416"/><text x="58" y="102" font-size="12" fill="#9C8F76" letter-spacing=".1em">ACCOUNT</text><text x="58" y="132" font-size="24" font-weight="700" fill="#E8E0D0">€5,000</text>
+<rect x="290" y="74" width="230" height="74" rx="12" fill="#0B0805" stroke="#2A2416"/><text x="308" y="102" font-size="12" fill="#9C8F76" letter-spacing=".1em">RISK / TRADE</text><text x="308" y="132" font-size="24" font-weight="700" fill="#F2B01E">1% · €50</text>
+<rect x="40" y="162" width="230" height="74" rx="12" fill="#0B0805" stroke="#2A2416"/><text x="58" y="190" font-size="12" fill="#9C8F76" letter-spacing=".1em">STOP-LOSS</text><text x="58" y="220" font-size="24" font-weight="700" fill="#E8E0D0">25 pips</text>
+<rect x="290" y="162" width="230" height="74" rx="12" fill="#0B0805" stroke="#2A2416"/><text x="308" y="190" font-size="12" fill="#9C8F76" letter-spacing=".1em">RISK : REWARD</text><text x="308" y="220" font-size="24" font-weight="700" fill="#E8E0D0">1 : 2</text>
+<rect x="40" y="252" width="480" height="70" rx="12" fill="#F2B01E"/><text x="62" y="282" font-size="12" font-weight="700" fill="#3a2a08" letter-spacing=".12em">POSITION SIZE</text><text x="62" y="308" font-size="22" font-weight="800" fill="#060606">0.21 lot</text>
+<text x="498" y="296" text-anchor="end" font-size="13" font-weight="700" fill="#3a2a08">€50 ÷ (25 × €9.26)</text>
+</g></svg>

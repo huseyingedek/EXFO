@@ -1,0 +1,16 @@
+---
+import BlogPostPage from "@/layouts/pages/BlogPostPage.astro";
+import { getSinglePage } from "@/lib/contentParser.astro";
+
+export async function getStaticPaths() {
+  const posts = await getSinglePage("blog", "en");
+  return posts.map((post) => ({
+    params: { single: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+---
+
+<BlogPostPage lang="en" post={post} />
